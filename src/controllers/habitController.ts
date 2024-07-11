@@ -8,7 +8,11 @@ export const createHabit = async (req: Request, res: Response) => {
     const savedHabit = await newHabit.save();
     res.status(201).json(savedHabit);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    if (error instanceof Error) {
+      res.status(400).json({ message: error.message });
+    } else {
+      res.status(400).json({ message: 'Unknown error occurred' });
+    }
   }
 };
 
@@ -18,7 +22,11 @@ export const getHabits = async (req: Request, res: Response) => {
     const habits = await Habit.find();
     res.status(200).json(habits);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    if (error instanceof Error) {
+      res.status(400).json({ message: error.message });
+    } else {
+      res.status(400).json({ message: 'Unknown error occurred' });
+    }
   }
 };
 
@@ -29,7 +37,11 @@ export const getHabitById = async (req: Request, res: Response) => {
     if (!habit) return res.status(404).json({ message: 'Habit not found' });
     res.status(200).json(habit);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    if (error instanceof Error) {
+      res.status(400).json({ message: error.message });
+    } else {
+      res.status(400).json({ message: 'Unknown error occurred' });
+    }
   }
 };
 
@@ -40,7 +52,11 @@ export const updateHabit = async (req: Request, res: Response) => {
     if (!updatedHabit) return res.status(404).json({ message: 'Habit not found' });
     res.status(200).json(updatedHabit);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    if (error instanceof Error) {
+      res.status(400).json({ message: error.message });
+    } else {
+      res.status(400).json({ message: 'Unknown error occurred' });
+    }
   }
 };
 
@@ -51,6 +67,10 @@ export const deleteHabit = async (req: Request, res: Response) => {
     if (!deletedHabit) return res.status(404).json({ message: 'Habit not found' });
     res.status(200).json({ message: 'Habit deleted' });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    if (error instanceof Error) {
+      res.status(400).json({ message: error.message });
+    } else {
+      res.status(400).json({ message: 'Unknown error occurred' });
+    }
   }
 };
