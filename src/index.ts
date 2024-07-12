@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import userRoutes from './routes/userRoutes';
-import habitRoutes from './routes/habitRoutes';  // Importuj trasy nawyków
+import habitRoutes from './routes/habitRoutes';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -17,11 +17,15 @@ app.use(bodyParser.json());
 const mongoUri = process.env.MONGO_URI || 'mongodb://localhost:27017/mydatabase';
 
 mongoose.connect(mongoUri)
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.log('MongoDB connection error:', err));
+  .then(() => console.log('MongoDB connected successfully'))
+  .catch((err) => console.error('MongoDB connection error:', err));
 
 app.use('/api/users', userRoutes);
-app.use('/api', habitRoutes);  // Używaj tras nawyków
+app.use('/api', habitRoutes);
+
+app.get('/', (req, res) => {
+  res.send('Hello, World!');
+});
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
